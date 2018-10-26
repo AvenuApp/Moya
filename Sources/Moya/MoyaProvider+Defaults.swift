@@ -1,5 +1,4 @@
 import Foundation
-import Instabug
 
 /// These functions are default mappings to `MoyaProvider`'s properties: endpoints, requests, manager, etc.
 public extension MoyaProvider {
@@ -31,10 +30,14 @@ public extension MoyaProvider {
         configuration.httpAdditionalHeaders = Manager.defaultHTTPHeaders
 
         #warning ("Enable Instabug network logging")
-        NetworkLogger.enableLogging(for: configuration)
+        MoyaLoggingHelper.externalLogger?(configuration)
         
         let manager = Manager(configuration: configuration)
         manager.startRequestsImmediately = false
         return manager
     }
+}
+
+public struct MoyaLoggingHelper {
+     public static var externalLogger: ((_ configuration: URLSessionConfiguration) -> ())?
 }
