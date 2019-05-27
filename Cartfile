@@ -2,3 +2,4 @@ github "Alamofire/Alamofire" ~> 4.1
 github "ReactiveCocoa/ReactiveSwift" ~> 5.0
 github "ReactiveX/RxSwift" ~> 4.0
 github "antitypical/Result" ~> 4.1
+binary "https://raw.githubusercontent.com/Instabug/Instabug-iOS/master/Instabug.json"
