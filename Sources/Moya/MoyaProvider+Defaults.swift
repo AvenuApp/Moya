@@ -26,22 +26,6 @@ public extension MoyaProvider {
     }
 
     final class func defaultAlamofireManager() -> Manager {
-        return MoyaLoggingHelper.manager
+        return MoyaExternalHelper.manager
     }
-}
-
-public struct MoyaLoggingHelper {
-    public static var externalLogger: ((_ configuration: URLSessionConfiguration) -> ())?
-    static let manager: Manager = {
-        let configuration = URLSessionConfiguration.default
-        configuration.httpAdditionalHeaders = Manager.defaultHTTPHeaders
-        
-        #warning ("Enable Instabug network logging")
-        MoyaLoggingHelper.externalLogger?(configuration)
-        
-        let manager = Manager(configuration: configuration)
-        manager.startRequestsImmediately = false
-        return manager
-        
-    }()
 }
