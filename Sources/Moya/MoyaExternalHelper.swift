@@ -14,7 +14,7 @@ public struct MoyaExternalHelper {
     public static var requestAdapter: RequestAdapter?
     
     static let manager: Manager = {
-        let manager = MoyaExternalHelper.getManager()
+        let manager = MoyaExternalHelper.getManager(withTimeoutInterval: nil)
         return manager
     }()
     
