@@ -12,12 +12,19 @@ public struct MoyaExternalHelper {
     public static var externalLogger: ((_ configuration: URLSessionConfiguration) -> ())?
     public static var requestRetrier: RequestRetrier?
     public static var requestAdapter: RequestAdapter?
-    public static var timeoutIntervalForRequest: TimeInterval?
     
     static let manager: Manager = {
+        let manager = MoyaExternalHelper.getManager()
+        return manager
+    }()
+    
+    public static func getManager(withTimeoutInterval timeoutIntervalForRequest: TimeInterval?,
+                                  headers: [AnyHashable : Any] = Manager.defaultHTTPHeaders,
+                                  requestRetrier: RequestRetrier = MoyaExternalHelper.requestRetrier,
+                                  requestAdapter: RequestAdapter = MoyaExternalHelper.requestAdapter) {
         let configuration = URLSessionConfiguration.default
-        configuration.httpAdditionalHeaders = Manager.defaultHTTPHeaders
-        if let timeoutIntervalForRequest = MoyaExternalHelper.timeoutIntervalForRequest {
+        configuration.httpAdditionalHeaders = headers
+        if let timeoutIntervalForRequest = timeoutIntervalForRequest {
             configuration.timeoutIntervalForRequest = timeoutIntervalForRequest
         }
         
@@ -25,10 +32,9 @@ public struct MoyaExternalHelper {
         
         let manager = Manager(configuration: configuration)
         manager.startRequestsImmediately = false
-        manager.retrier = MoyaExternalHelper.requestRetrier
-        manager.adapter = MoyaExternalHelper.requestAdapter
-        
+        manager.retrier = requestRetrier
+        manager.adapter = requestAdapter
+
         return manager
-        
-    }()
+    }
 }
