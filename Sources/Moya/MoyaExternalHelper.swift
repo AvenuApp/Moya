@@ -20,8 +20,8 @@ public struct MoyaExternalHelper {
     
     public static func getManager(withTimeoutInterval timeoutIntervalForRequest: TimeInterval?,
                                   headers: [AnyHashable : Any] = Manager.defaultHTTPHeaders,
-                                  requestRetrier: RequestRetrier = MoyaExternalHelper.requestRetrier,
-                                  requestAdapter: RequestAdapter = MoyaExternalHelper.requestAdapter) {
+                                  requestRetrier: RequestRetrier? = MoyaExternalHelper.requestRetrier,
+                                  requestAdapter: RequestAdapter? = MoyaExternalHelper.requestAdapter) -> Manager {
         let configuration = URLSessionConfiguration.default
         configuration.httpAdditionalHeaders = headers
         if let timeoutIntervalForRequest = timeoutIntervalForRequest {
